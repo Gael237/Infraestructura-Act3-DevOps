@@ -107,7 +107,7 @@ resource "aws_instance" "Web_server" {
   subnet_id = aws_subnet.subnet_public.id
   security_groups = [ aws_security_group.web_sg.name ]
   key_name = "Act3key"
-  user_data = file("scripts/setup_web.py")
+  user_data = file("scripts/setup_web.sh")
 
   tags = {
     name = "Act3-Web-Server-${count.index + 1}"
