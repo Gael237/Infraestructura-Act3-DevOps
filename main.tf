@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "igw" {
 
 #Tablas de rutas
 resource "aws_route_table" "public" {
-  vpc_id = aws_internet_gateway.igw.id
+  vpc_id = aws_vpc.main.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -90,7 +90,7 @@ resource "aws_instance" "jump_server" {
   ami = "ami-00a929b66ed6e0de6" #Amazon Linux 3
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public.id
-  security_groups = [ aws_security_group.Jump_sg.name ]
+  security_groups = [ aws_security_group.Jump_sg.id ]
   key_name = "Act3key"
 
   tags = {
@@ -105,7 +105,7 @@ resource "aws_instance" "Web_server" {
   ami = "ami-00a929b66ed6e0de6"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet_public.id
-  security_groups = [ aws_security_group.web_sg.name ]
+  security_groups = [ aws_security_group.web_sg.id ]
   key_name = "Act3key"
   user_data = file("scripts/setup_web.sh")
 
